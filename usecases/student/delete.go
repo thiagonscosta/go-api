@@ -15,4 +15,6 @@ func Delete(id uuid.UUID) (err error){
 	}
 
 	entities.Students = newStudents
+
+	return err
 }

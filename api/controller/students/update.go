@@ -7,14 +7,14 @@ import (
 
 	"github.com/go-crud/entities"
 	"github.com/go-crud/entities/shared"
+	student_usecases "github.com/go-crud/usecases/student"
 )
 
 func Update(c *gin.Context) {
 	var input StudentInput
-	var studentFound entities.Student
-	var newStudents []entities.Student
+	var err error
 
-	err := c.Bind(&input)
+	err = c.Bind(&input)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError(err.Error()))
 		return
@@ -27,29 +27,10 @@ func Update(c *gin.Context) {
 		return
 	}
 
-	for _, el := range entities.Students {
-		if el.ID == input.UUID {
-			studentFound = el
-		}
+	student, err := student_usecases.Update(input.UUID, input.Name, input.Age)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, controller.NewResponseMessageError(err.Error()))
 	}
-
-	if studentFound.ID == shared.GetUUIDEmpty() {
-		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError(err.Error()))
-		return 
-	}
-
-	studentFound.Name = input.Name
-	studentFound.Age = input.Age
-	
-	for _, el := range entities.Students {
-		if studentFound.ID == el.ID {
-			newStudents = append(newStudents, studentFound)
-		} else {
-			newStudents = append(newStudents, el)
-		}
-	}
-
-	entities.Students = newStudents
 
 	c.JSON(http.StatusOK, studentFound)
 }

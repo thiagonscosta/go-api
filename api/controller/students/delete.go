@@ -3,32 +3,28 @@ package students
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
-	"github.com/go-crud/entities"
+	// "github.com/go-crud/entities"
 	"github.com/go-crud/entities/shared"
 	"github.com/go-crud/api/controller"
 	student_usecases "github.com/go-crud/usecases/student"
 )
 
 func Delete(c *gin.Context) {
-	idParam := c.Params.ByName("id")
-	var students []entities.Student
+	var input StudentInput
 
-	id, err := shared.GetUUIDFromString(idParam)
+	var err error 
 
+	input.ID = c.Params.ByName("id")
+	input.UUID, err = shared.GetUUIDFromString(input.ID)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError(err.Error()))
+		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError("Error on parsing id"))
 		return 
 	}
 
-	for _, el := range entities.Students {
-		if el.ID != id {
-			students = append(students, el)
-		} else {
-			continue
-		}
+	if err = student_usecases.Delete(input.UUID); err != nil {
+		c.JSON(http.StatusInternalServerError, controller.NewResponseMessageError(err.Error()))
+		return 
 	}
 
-	entities.Students = students
-
-	c.JSON(http.StatusOK, students)
+	c.JSON(http.StatusOK, controller.NewResponseMessage("Student excluding with success"))
 }
