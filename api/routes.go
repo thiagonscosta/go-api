@@ -10,6 +10,7 @@ func (s *Service) GetRoutes() {
 
 	groupStudents := s.Engine.Group("students")
 	groupStudents.GET("/", students_controller.List)
+	groupStudents.GET("/:id", students_controller.Details)
 	groupStudents.POST("/", students_controller.Create)
 	groupStudents.PUT("/:id", students_controller.Update)
 	groupStudents.DELETE("/:id", students_controller.Delete)

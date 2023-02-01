@@ -3,10 +3,9 @@ package students
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
+	"github.com/go-crud/entities"
 	"github.com/go-crud/entities/shared"
 	"github.com/go-crud/api/controller"
-
-	"github.com/go-crud/entities"
 )
 
 func Delete(c *gin.Context) {
