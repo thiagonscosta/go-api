@@ -6,6 +6,7 @@ import (
 	"github.com/go-crud/entities"
 	"github.com/go-crud/entities/shared"
 	"github.com/go-crud/api/controller"
+	student_usecases "github.com/go-crud/usecases/student"
 )
 
 func Delete(c *gin.Context) {

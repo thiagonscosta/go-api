@@ -6,7 +6,10 @@ import (
 	"github.com/go-crud/entities"
 	"github.com/go-crud/api/controller"
 
+	"github.com/google/uuid"
+
 	"github.com/go-crud/entities/shared"
+	student_usecases "github.com/go-crud/usecases/student"
 )
 
 func Details(c *gin.Context) {
@@ -16,21 +19,18 @@ func Details(c *gin.Context) {
 
 	input.ID = c.Params.ByName("id")	
 	input.UUID, err = shared.GetUUIDFromString(input.ID)
+
 	if err != nil {
-		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError("Error no parsing parameters"))
+		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError("Error on parsing parameters"))
 		return
 	}
 
-	for _, el := range entities.Students {
-		if el.ID == input.UUID {
-			student = el
-		}
-	}
+	student, err = student_usecases.SearchById(input.UUID)
 
-	// if student.ID == shared.GetUUIDEmpty() {
-	// 	c.JSON(http.StatusBadRequest, controller.NewResponseMessageError("Not found"))
-	// 	return
-	// }
+	if student.ID == uuid.Nil {
+		c.JSON(http.StatusBadRequest, controller.NewResponseMessageError("Not found"))
+		return
+	}
 
 	c.JSON(http.StatusOK, student)
 }
