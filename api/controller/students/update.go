@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-crud/api/controller"
 
-	"github.com/go-crud/entities"
+	// "github.com/go-crud/entities"
 	"github.com/go-crud/entities/shared"
 	student_usecases "github.com/go-crud/usecases/student"
 )
@@ -32,5 +32,5 @@ func Update(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, controller.NewResponseMessageError(err.Error()))
 	}
 
-	c.JSON(http.StatusOK, studentFound)
+	c.JSON(http.StatusOK, student)
 }

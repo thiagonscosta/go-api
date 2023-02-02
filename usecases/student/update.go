@@ -8,7 +8,7 @@ import (
 	"github.com/go-crud/entities/shared"
 )
 
-func Update(id uuid.UUID, name string, age, int) (student entities.Student, err error) {
+func Update(id uuid.UUID, name string, age int) (student entities.Student, err error) {
 	var studentFound entities.Student
 	var newStudents []entities.Student
 
