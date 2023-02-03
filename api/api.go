@@ -1,7 +1,10 @@
 package api 
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+
+	"github.com/go-crud/infra/config"
 )
 
 type Service struct {
@@ -14,7 +17,7 @@ func NewService() *Service {
 	}
 }
 
-func (s *Service) Start() {
+func (s *Service) Start() error {
 	s.GetRoutes()
-	s.Engine.Run()
+	return s.Engine.Run(fmt.Sprintf(":%d", config.Env.ApiPort))
 }

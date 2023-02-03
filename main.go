@@ -7,7 +7,9 @@ import (
 	// "net/http"
 	// "github.com/gin-gonic/gin"
 	// "github.com/google/uuid"
+	"log"
 	"github.com/go-crud/api"
+	"github.com/go-crud/infra/config"
 )
 
 // func healthCheck(c *gin.Context) {
@@ -167,9 +169,16 @@ import (
 // }
 
 func main() {
-	service := api.NewService()
-	service.Start()
+	// service := api.NewService()
+	// service.Start()
 	// service := gin.Default()
+	var err error 
+
+	err = config.StartConfig()
+	FatalError(err)
+
+	err = api.NewService().Start()
+	FatalError(err)
 
 	// getRoutes(service)
 
@@ -189,3 +198,9 @@ func main() {
 
 // 	return c
 // }
+
+func FatalError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
