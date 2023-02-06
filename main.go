@@ -8,8 +8,11 @@ import (
 	// "github.com/gin-gonic/gin"
 	// "github.com/google/uuid"
 	"log"
+	"context"
 	"github.com/go-crud/api"
 	"github.com/go-crud/infra/config"
+	"github.com/go-crud/infra/database"
+	"github.com/go-crud/infra/database/mongo"
 )
 
 // func healthCheck(c *gin.Context) {
@@ -173,11 +176,14 @@ func main() {
 	// service.Start()
 	// service := gin.Default()
 	var err error 
+	ctx := context.TODO()
+
+	db := GetDatabase(ctx)
 
 	err = config.StartConfig()
 	FatalError(err)
 
-	err = api.NewService().Start()
+	err = api.NewService(db).Start()
 	FatalError(err)
 
 	// getRoutes(service)
@@ -203,4 +209,11 @@ func FatalError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func GetDatabase(ctx context.Context) *database.Database {
+	client, err := mongo.GetConnection(ctx)
+	FatalError(err)
+
+	return database.NewDatabase(client)
 }
