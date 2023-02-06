@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  go-crud:
+    container_name: go-crud 
+    image: golang:1.9
+    volumes:
+      - .:/go/src
+    ports:
+      - 8080:8080
+    command: tail -f "/dev/null" 
+  
+  go-crud-mongo:
+    container_name: go-crud-mongo
+    image: mongo
+    volumes:
+      - .database:/data/db
+    ports:
+      - 27017:27017
+
+    
