@@ -13,6 +13,7 @@ import (
 	"github.com/go-crud/infra/config"
 	"github.com/go-crud/infra/database"
 	"github.com/go-crud/infra/database/mongo"
+	"github.com/go-crud/infra/database/mongo/repositories"
 )
 
 // func healthCheck(c *gin.Context) {
