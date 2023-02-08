@@ -5,19 +5,19 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/go-crud/infra/config"
-	"github.com/go-crud/infra/database"
+	// "github.com/go-crud/infra/database"
 )
 
 type Service struct {
 	Engine *gin.Engine
 
-	Database *database.Database
+	// Database *database.Database
 }
 
-func NewService(db *database.Database) *Service {
+func NewService() *Service {
 	return &Service{
 		Engine: gin.Default(),
-		Database: db,
+		// Database: db,
 	}
 }
 

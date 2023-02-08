@@ -176,14 +176,14 @@ func main() {
 	// service.Start()
 	// service := gin.Default()
 	var err error 
-	ctx := context.TODO()
+	// ctx := context.TODO()
 
-	db := GetDatabase(ctx)
+	// db := GetDatabase(ctx)
 
 	err = config.StartConfig()
 	FatalError(err)
 
-	err = api.NewService(db).Start()
+	err = api.NewService().Start()
 	FatalError(err)
 
 	// getRoutes(service)
@@ -215,5 +215,6 @@ func GetDatabase(ctx context.Context) *database.Database {
 	client, err := mongo.GetConnection(ctx)
 	FatalError(err)
 
-	return database.NewDatabase(client)
+	studentRepository := repositories.NewStudentRepository(ctx, client) 
+	return database.NewDatabase(client, studentRepository)
 }

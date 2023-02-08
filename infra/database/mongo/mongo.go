@@ -1,6 +1,5 @@
 package mongo
 
-
 import (
 	"context"
 
@@ -12,7 +11,7 @@ import (
 )
 
 func GetConnection(ctx context.Context) (*mongo.Client, error) {
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(config.Env.MongoURL))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
 
 	if err != nil {
 		return client, err
@@ -25,6 +24,6 @@ func GetConnection(ctx context.Context) (*mongo.Client, error) {
 	return client, nil
 }
 
-func GetCollecion(ctx context.Context, client *mongo.Client, name string) *mongo.Collection {
+func GetCollection(ctx context.Context, client *mongo.Client, name string) *mongo.Collection {
 	return client.Database(config.Env.MongoDatabase).Collection(name)
 }

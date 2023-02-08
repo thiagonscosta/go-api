@@ -28,4 +28,6 @@ func NewStudent(name string, age int) *Student {
 	}
 }
 
+type StudentRepository interface {}
+
 
