@@ -1,9 +1,13 @@
 package student
 
-type StudentUsecase struct {
-	Database *daabase.Database
+import "github.com/go-crud/infra/database"
+
+type StudentUseCase struct {
+	Database *database.Database
 }
 
-func NewStudentUsecase() *StudentUsecase {
-
+func NewStudentUsecase(db *database.Database) *StudentUseCase {
+	return &StudentUseCase{
+		Database: db,
+	}
 }

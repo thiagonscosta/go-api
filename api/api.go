@@ -11,13 +11,15 @@ import (
 type Service struct {
 	Engine *gin.Engine
 
-	// Database *database.Database
+	Database *database.Database
+
+	StudentsController *students.StudentController
 }
 
 func NewService() *Service {
 	return &Service{
 		Engine: gin.Default(),
-		// Database: db,
+		Database: db,
 	}
 }
 
